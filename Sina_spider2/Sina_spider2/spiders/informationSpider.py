@@ -41,30 +41,50 @@ class Spider(RedisSpider):
         informationItems["_id"] = ID
         if nickname:
             informationItems["NickName"] = nickname[0]
+        else:
+            informationItems["NickName"] = ''
         if gender:
             informationItems["Gender"] = gender[0]
+        else:
+            informationItems["Gender"] = ''
         if place:
             place = place[0].split(" ")
             informationItems["Province"] = place[0]
             if len(place) > 1:
                 informationItems["City"] = place[1]
+            else:
+                informationItems["City"] = ''
+        else:
+            informationItems["Province"] = ''
+            informationItems["City"] = ''
         if signature:
             informationItems["Signature"] = signature[0]
+        else:
+            informationItems["Signature"] = ''
         if birthday:
             try:
                 birthday = datetime.datetime.strptime(birthday[0], "%Y-%m-%d")
                 informationItems["Birthday"] = birthday - datetime.timedelta(hours=8)
             except Exception:
                 pass
+        else:
+            informationItems["Birthday"] = ''
         if sexorientation:
             if sexorientation[0] == gender[0]:
                 informationItems["Sex_Orientation"] = "gay"
             else:
                 informationItems["Sex_Orientation"] = "Heterosexual"
+        else:
+            informationItems["Sex_Orientation"] = ''
         if marriage:
             informationItems["Marriage"] = marriage[0]
+        else:
+            informationItems["Marriage"] = ''
+
         if url:
             informationItems["URL"] = url[0]
+        else:
+            informationItems["URL"] = ''
 
         urlothers = "http://weibo.cn/attgroup/opening?uid=%s" % ID
         r = requests.get(urlothers, cookies=response.request.cookies)
@@ -81,7 +101,7 @@ class Spider(RedisSpider):
                     informationItems["Num_Follows"] = int(num_follows[0])
                 if num_fans:
                     informationItems["Num_Fans"] = int(num_fans[0])
-        log.DEBUG(informationItems)
+
         yield informationItems
 
         urlFollows = "http://weibo.cn/%s/follow" % ID  # 爬第一页的关注，加入待爬队列
