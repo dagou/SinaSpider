@@ -107,6 +107,11 @@ class Spider(RedisSpider):
                     informationItems["Num_Fans"] = int(num_fans[0])
                 else:
                     informationItems["Num_Fans"] = 0
+            else:
+                informationItems["Num_Fans"] = 0
+                informationItems["Num_Follows"] = 0
+                informationItems["Num_Tweets"] = 0
+
         yield informationItems
 
         urlFollows = "http://weibo.cn/%s/follow" % ID  # 爬第一页的关注，加入待爬队列
