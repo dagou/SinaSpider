@@ -8,6 +8,7 @@ from Sina_spider2.weiboID import weiboID
 from scrapy.selector import Selector
 from scrapy.http import Request
 from Sina_spider2.items import InformationItem
+from scrapy import log
 
 
 class Spider(RedisSpider):
@@ -80,6 +81,7 @@ class Spider(RedisSpider):
                     informationItems["Num_Follows"] = int(num_follows[0])
                 if num_fans:
                     informationItems["Num_Fans"] = int(num_fans[0])
+        log.DEBUG(informationItems)
         yield informationItems
 
         urlFollows = "http://weibo.cn/%s/follow" % ID  # 爬第一页的关注，加入待爬队列
