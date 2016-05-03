@@ -5,6 +5,7 @@ import json
 import MySQLdb
 import settings
 import sys
+from scrapy import log
 
 class MongoDBPipleline(object):
     def __init__(self):
@@ -64,7 +65,7 @@ class ScrapyWeiboPipeline(object):
         return item
 
     def _insertUserItem(self,item):
-        uname = item['name'].encode("utf-8")
+        uname = item['NickName'].encode("utf-8")
 
         sql = u"INSERT INTO sina.user(uid, uname, gender,province,city,signature,birthday, num_tweets,num_follows,num_fans,sex_orientation,marriage,url) " \
               u"VALUES(%s, %s, %s, %s,%s,%s, %s, %s, %s,%s,%s, %s, %s)"
@@ -77,6 +78,7 @@ class ScrapyWeiboPipeline(object):
             exc_type, exc_value, exc_traceback = sys.exc_info()
             print "File \"%s\", line %s.\n MySql Error:%s" % (exc_traceback.tb_frame.f_code.co_filename,
                                                               exc_traceback.tb_lineno, e)
+            log.ERROR("insert user Item error!!")
     def _insertWeiboItem(self, item):
         """
         Insert a WeiboItem into table in database
@@ -95,4 +97,5 @@ class ScrapyWeiboPipeline(object):
             exc_type, exc_value, exc_traceback = sys.exc_info()
             print "File \"%s\", line %s.\n MySql Error:%s" % (exc_traceback.tb_frame.f_code.co_filename,
                                                               exc_traceback.tb_lineno, e)
+            log.ERROR("insert WeiboItem  error!!")
 
