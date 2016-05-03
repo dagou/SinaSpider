@@ -97,11 +97,16 @@ class Spider(RedisSpider):
                 num_fans = re.findall(u'\u7c89\u4e1d\[(\d+)\]', texts)  # 粉丝数
                 if num_tweets:
                     informationItems["Num_Tweets"] = int(num_tweets[0])
+                else:
+                    informationItems["Num_Tweets"] = 0
                 if num_follows:
                     informationItems["Num_Follows"] = int(num_follows[0])
+                else:
+                    informationItems["Num_Follows"] = 0
                 if num_fans:
                     informationItems["Num_Fans"] = int(num_fans[0])
-
+                else:
+                    informationItems["Num_Fans"] = 0
         yield informationItems
 
         urlFollows = "http://weibo.cn/%s/follow" % ID  # 爬第一页的关注，加入待爬队列
