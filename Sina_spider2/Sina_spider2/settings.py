@@ -23,3 +23,9 @@ COMMANDS_MODULE = 'Sina_spider2.commands'
 # CONCURRENT_REQUESTS = 1
 # CONCURRENT_ITEMS = 1
 # CONCURRENT_REQUESTS_PER_IP = 1
+
+
+MYSQL_HOST = "localhost"
+USER_NAME = "root"
+PASSWORD = ""
+DATABASE = "sina"
