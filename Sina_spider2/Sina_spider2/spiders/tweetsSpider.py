@@ -41,21 +41,38 @@ class Spider(RedisSpider):
             tweetsItems["ID"] = ID
             if content:
                 tweetsItems["Content"] = content.strip(u"[\u4f4d\u7f6e]")  # 去掉最后的"[位置]"
+            else:
+                tweetsItems["Content"] = ''
             if cooridinates:
                 cooridinates = re.findall('center=([\d|.|,]+)', cooridinates)
                 if cooridinates:
                     tweetsItems["Co_oridinates"] = cooridinates[0]
+                else:
+                    tweetsItems["Co_oridinates"] = ''
+            else:
+                tweetsItems["Co_oridinates"] = ''
             if like:
                 tweetsItems["Like"] = int(like[0])
+            else:
+                tweetsItems["Like"] = 0
             if transfer:
                 tweetsItems["Transfer"] = int(transfer[0])
+            else:
+                tweetsItems["Transfer"] = 0
             if comment:
                 tweetsItems["Comment"] = int(comment[0])
+            else:
+                tweetsItems["Comment"] = 0
             if others:
                 others = others.split(u"\u6765\u81ea")
                 tweetsItems["PubTime"] = others[0]
                 if len(others) == 2:
                     tweetsItems["Tools"] = others[1]
+                else:
+                    tweetsItems["Tools"] = ''
+            else:
+                tweetsItems["PubTime"] = ''
+                tweetsItems["Tools"] = ''
             yield tweetsItems
         url_next = selector.xpath(
             u'body/div[@class="pa" and @id="pagelist"]/form/div/a[text()="\u4e0b\u9875"]/@href').extract()
